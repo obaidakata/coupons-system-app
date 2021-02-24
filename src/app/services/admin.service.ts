@@ -10,49 +10,52 @@ import {Customer} from '../dataTypes/customer';
   providedIn: 'root'
 })
 export class AdminService {
-  private apiServerUrl = ''; // environment.apiBaseUrl;
+  private adminAPIURL = ''; // environment.apiBaseUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
+  public login(email: string, password: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.adminAPIURL}/${email}/${password}`);
+  }
 
   public addCompany(company: Company): Observable<Company> {
-    return this.http.post<Company>(`${this.apiServerUrl}/admin/company/add`, company);
+    return this.http.post<Company>(`${this.adminAPIURL}/company/add`, company);
   }
 
   public updateCompany(company: Company): Observable<Company> {
-    return this.http.put<Company>(`${this.apiServerUrl}/admin/company/update`, company);
+    return this.http.put<Company>(`${this.adminAPIURL}/company/update`, company);
   }
 
   public deleteCompany(companyID: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/admin/company/delete/${companyID}`);
+    return this.http.delete<void>(`${this.adminAPIURL}/company/delete/${companyID}`);
   }
 
   public getAllCompanies(): Observable<Company[]> {
-    return this.http.get<Company[]>(`${this.apiServerUrl}/admin/company/all`);
+    return this.http.get<Company[]>(`${this.adminAPIURL}/company/all`);
   }
 
   public getOneCompanies(companyID: number): Observable<Company> {
-    return this.http.get<Company>(`${this.apiServerUrl}/admin/company/find/${companyID}`);
+    return this.http.get<Company>(`${this.adminAPIURL}/company/find/${companyID}`);
   }
 
   //    -------------------- customer ------------------------------
 
   public addCustomer(customer: Customer): Observable<Customer> {
-    return this.http.post<Customer>(`${this.apiServerUrl}/admin/customer/add`, customer);
+    return this.http.post<Customer>(`${this.adminAPIURL}/customer/add`, customer);
   }
 
   public updateCustomer(customer: Customer): Observable<Customer> {
-    return this.http.put<Customer>(`${this.apiServerUrl}/admin/customer/update`, customer);
+    return this.http.put<Customer>(`${this.adminAPIURL}/customer/update`, customer);
   }
 
   public deleteCustomer(customerID: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/admin/customer/delete/${customerID}`);
+    return this.http.delete<void>(`${this.adminAPIURL}/customer/delete/${customerID}`);
   }
 
   public getAllCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(`${this.apiServerUrl}/admin/customer/all`);
+    return this.http.get<Customer[]>(`${this.adminAPIURL}/customer/all`);
   }
 
   public getOneCustomer(customerID: number): Observable<Customer> {
-    return this.http.get<Customer>(`${this.apiServerUrl}/admin/customer/find/${customerID}`);
+    return this.http.get<Customer>(`${this.adminAPIURL}/customer/find/${customerID}`);
   }
 }
