@@ -3,12 +3,13 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Coupon} from '../dataTypes/coupon';
 import {Customer} from '../dataTypes/customer';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
-  private customerAPIURL = ''; // environment.apiBaseUrl;
+  private customerAPIURL = environment.customerAPIURL;
   constructor(private http: HttpClient) { }
   public login(email: string, password: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.customerAPIURL}/${email}/${password}`);
@@ -22,7 +23,7 @@ export class CustomerService {
     return this.http.get<Array<Coupon>>(`${this.customerAPIURL}/coupons`);
   }
 
-  public getCustomerCouponsByCategory(category: eCategory): Observable<Array<Coupon>> {
+  public getCustomerCouponsByCategory(category: number): Observable<Array<Coupon>> {
     return this.http.get<Array<Coupon>>(`${this.customerAPIURL}/coupons/${category}`);
   }
 

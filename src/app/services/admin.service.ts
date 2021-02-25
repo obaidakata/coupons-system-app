@@ -10,7 +10,7 @@ import {Customer} from '../dataTypes/customer';
   providedIn: 'root'
 })
 export class AdminService {
-  private adminAPIURL = ''; // environment.apiBaseUrl;
+  private adminAPIURL = environment.adminAPIURL;
 
   constructor(private http: HttpClient) {}
   public login(email: string, password: string): Observable<boolean> {

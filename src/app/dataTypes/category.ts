@@ -1,4 +1,4 @@
-enum eCategory {
+enum Category {
   Food,
   Electricity,
   Restaurant,
