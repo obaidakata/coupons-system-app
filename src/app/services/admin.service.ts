@@ -4,13 +4,15 @@ import {Observable} from 'rxjs';
 import {Company} from '../dataTypes/company';
 import {environment} from '../../environments/environment';
 import {Customer} from '../dataTypes/customer';
+import {ClientService} from './ClientService';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminService {
+export class AdminService implements ClientService{
   private adminAPIURL = environment.adminAPIURL;
+  public name = 'Admin';
 
   constructor(private http: HttpClient) {}
   public login(email: string, password: string): Observable<boolean> {

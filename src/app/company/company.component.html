@@ -1,0 +1,152 @@
+
+<div class="container" id="coupon-container">
+  <button class="btn btn-primary" (click)="onOpenModalCoupon(null, 'add')" type="submit">Add Coupon</button>
+  <div class="row">
+    <div *ngFor="let coupon of companyCoupons" class="col-md-6 col-xl-3">
+      <div class="card m-b-30">
+        <div class="card-body row">
+<!--          <div class="col-6">-->
+<!--            <a href=""><img src="{{coupon?.image}}" alt="" class="img-fluid rounded-circle w-60"></a>-->
+<!--          </div>-->
+          <div class="col-6 card-title align-self-center mb-0">
+            <h5>{{coupon?.title}}</h5>
+          </div>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Description: {{coupon?.description}}</li>
+          <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Start Date: {{coupon?.startDate}}</li>
+          <li class="list-group-item"><i class="fa fa-envelope float-right"></i>End Date: {{coupon?.endDate}}</li>
+          <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Amount: {{coupon?.amount}}</li>
+          <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Price: {{coupon?.price}}</li>
+          <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Category: {{coupon?.categoryID}}</li>
+        </ul>
+        <div class="card-body">
+          <div class="float-right btn-group btn-group-sm">
+            <a (click)="onOpenModalCoupon(coupon, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+            <a (click)="onOpenModalCoupon(coupon, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Coupon Modal -->
+  <div class="modal fade" id="addCouponModal" tabindex="-1" role="dialog" aria-labelledby="addCouponModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addCouponModalLabel">Add Company</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddCoupon(addForm)">
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" ngModel name="title" class="form-control" id="title" placeholder="Title" required>
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <input type="text" ngModel name="description" class="form-control" id="description" placeholder="Description" required>
+            </div>
+<!--            <div class="form-group">-->
+<!--              <label for="startDate">Start Date</label>-->
+<!--              <input type="text" ngModel name="startDate" class="form-control" id="startDate" placeholder="Start Date" required>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="endDate">End Date</label>-->
+<!--              <input type="text" ngModel name="endDate" class="form-control" id="endDate" placeholder="End Date" required>-->
+<!--            </div>-->
+            <div class="form-group">
+              <label for="amount">Amount</label>
+              <input type="number" ngModel name="amount" class="form-control" id="amount" placeholder="Amount" required>
+            </div>
+            <div class="form-group">
+              <label for="price">Price</label>
+              <input type="number" ngModel name="price" class="form-control" id="price" placeholder="Price" required>
+            </div>
+            <div class="form-group">
+              <label for="category">Category</label>
+              <input type="number" ngModel name="categoryID" class="form-control" id="category" placeholder="Category" required>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" id="add-coupon-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--  &lt;!&ndash; Edit Modal &ndash;&gt;-->
+<!--  <div class="modal fade" id="updateCompanyModal" tabindex="-1" role="dialog" aria-labelledby="CompanyEditModalLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog" role="document">-->
+<!--      <div class="modal-content">-->
+<!--        <div class="modal-header">-->
+<!--          <h5 class="modal-title" id="updateCompanyModalLabel">Edit Company {{editCompany?.name}}</h5>-->
+<!--          <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--            <span aria-hidden="true">&times;</span>-->
+<!--          </button>-->
+<!--        </div>-->
+<!--        <div class="modal-body">-->
+<!--          <form #editForm="ngForm">-->
+
+<!--            <div class="form-group">-->
+<!--              <label for="name">Name</label>-->
+<!--              <input readonly type="text" ngModel="{{editCompany?.name}}" name="name" class="form-control" id="nameUpdate" aria-describedby="emailHelp" placeholder="Name">-->
+<!--            </div>-->
+
+<!--            <input type="hidden" ngModel="{{editCompany?.id}}" name="id" class="form-control" id="id" placeholder="Email">-->
+
+<!--            <div class="form-group">-->
+<!--              <label for="email">Email Address</label>-->
+<!--              <input readonly type="email" ngModel="{{editCompany?.email}}" name="email" class="form-control" id="emailUpdate" placeholder="Email">-->
+<!--            </div>-->
+
+<!--            <div class="form-group">-->
+<!--              <label for="password">Password</label>-->
+<!--              <input type="password" ngModel="{{editCompany?.password}}" name="password" class="form-control" id="passwordUpdate" placeholder="Password">-->
+<!--            </div>-->
+
+<!--            <div class="modal-footer">-->
+<!--              <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>-->
+<!--              <button (click)="onUpdateCompany(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>-->
+<!--            </div>-->
+<!--          </form>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; Delete Modal &ndash;&gt;-->
+<!--  <div class="modal fade" id="deleteCompanyModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog" role="document">-->
+<!--      <div class="modal-content">-->
+<!--        <div class="modal-header">-->
+<!--          <h5 class="modal-title" id="deleteModelLabel">Delete Company</h5>-->
+<!--          <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--            <span aria-hidden="true">&times;</span>-->
+<!--          </button>-->
+<!--        </div>-->
+<!--        <div class="modal-body">-->
+<!--          <p>Are you sure you want to delete company {{deleteCompany?.name}}?</p>-->
+<!--          <div class="modal-footer">-->
+<!--            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>-->
+<!--            <button (click)="onDeleteCompany(deleteCompany?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+</div>
+
+<!--&lt;!&ndash; Notification for no companies &ndash;&gt;-->
+<!--<div *ngIf="companies?.length == 0 && showCompanies" class="col-lg-12 col-md-12 col-xl-12">-->
+<!--  <div class="alert alert-info" role="alert">-->
+<!--    <h4 class="alert-heading">NO companies!</h4>-->
+<!--    <p>No companies were found.</p>-->
+<!--  </div>-->
+<!--</div>-->

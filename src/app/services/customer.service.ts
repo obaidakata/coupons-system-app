@@ -4,12 +4,14 @@ import {Observable} from 'rxjs';
 import {Coupon} from '../dataTypes/coupon';
 import {Customer} from '../dataTypes/customer';
 import {environment} from '../../environments/environment';
+import {ClientService} from './ClientService';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CustomerService {
+export class CustomerService implements ClientService{
   private customerAPIURL = environment.customerAPIURL;
+  public name = 'Customer';
   constructor(private http: HttpClient) { }
   public login(email: string, password: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.customerAPIURL}/${email}/${password}`);
