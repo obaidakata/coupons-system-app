@@ -13,11 +13,10 @@ import {NgForm} from '@angular/forms';
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
-  public showLogin = false;
+  public showLogin = true;
   public showAdmin = false;
-  public showCompany = true;
+  public showCompany = false;
   public showCustomer = false;
-
   ngOnInit(): void {
   }
 
@@ -35,5 +34,10 @@ export class AppComponent implements OnInit {
     {
       this.showCustomer = !this.showCustomer;
     }
+  }
+  public onLogOut(): void
+  {
+    this.showLogin = true;
+    this.showAdmin = this.showCompany = this.showCustomer = false;
   }
 }

@@ -22,6 +22,7 @@ export class CompanyService  implements ClientService{
   }
 
   public updateCoupon(coupon: Coupon): Observable<Coupon> {
+    console.log(coupon);
     return this.http.put<Coupon>(`${this.companyAPIURL}/update`, coupon);
   }
 

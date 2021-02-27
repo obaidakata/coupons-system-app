@@ -6,6 +6,15 @@ import {Company} from '../dataTypes/company';
 import {HttpErrorResponse} from '@angular/common/http';
 import {NgForm} from '@angular/forms';
 
+
+enum Category {
+  Food,
+  Electricity,
+  Restaurant,
+  Vacation
+}
+
+
 @Component({
   selector: 'app-company',
   templateUrl: './company.component.html',
@@ -16,31 +25,18 @@ export class CompanyComponent implements OnInit {
   public editCoupon: Coupon | null;
   public deleteCoupon: Coupon | null;
   public companyDetails: Company | null;
+  public categories: string[];
   constructor(private companyService: CompanyService) {
     this.companyCoupons = [];
     this.editCoupon = null;
     this.deleteCoupon = null;
     this.companyDetails = null;
+    this.categories = Object.keys(Category);
   }
 
   ngOnInit(): void {
-    this.login();
-  }
-  private login(): void {
-    this.companyService.login('company3@gmail.com', 'CUSTOMER4').subscribe(
-      (response: boolean) => {
-        console.log('logIn');
-        console.log(response);
-        if (response)
-        {
-          this.getCompanyDetails();
-          this.getCompanyCoupons();
-        }
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message + 'login');
-      }
-    );
+    this.getCompanyDetails();
+    this.getCompanyCoupons();
   }
   private getCompanyDetails(): void {
     this.companyService.getCompanyDetails().subscribe(
@@ -64,11 +60,35 @@ export class CompanyComponent implements OnInit {
       }
     );
   }
+
+  public onOpenModalCompanie(coupon: Coupon | null, mode: string): void {
+    const couponContainer = document.getElementById('coupon-container');
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.style.display = 'none';
+    button.setAttribute('data-toggle', 'modal');
+    if (mode === 'add') {
+      button.setAttribute('data-target', '#addCouponModal');
+    }
+    else if (mode === 'edit') {
+      this.editCoupon = coupon;
+      button.setAttribute('data-target', '#updateCouponModal');
+    }
+    else if (mode === 'delete') {
+      this.deleteCoupon = coupon;
+      button.setAttribute('data-target', '#deleteCouponModal');
+    }
+
+    couponContainer?.appendChild(button);
+    button.click();
+  }
   public onAddCoupon(addForm: NgForm): void{
     document.getElementById('add-coupon-form')?.click();
+    // const category = addForm.value.
     const coupon: Coupon = addForm.value;
     coupon.startDate = new Date();
     coupon.endDate = new Date('2022-01-16');
+    console.log('onAddCoupon');
     console.log(coupon);
     this.companyService.addCoupon(coupon).subscribe(
       (response: Coupon) => {
@@ -105,8 +125,11 @@ export class CompanyComponent implements OnInit {
     button.click();
   }
   public onUpdateCoupon(coupon: Coupon): void {
-    if (this.editCoupon !== undefined && this.editCoupon !== null) {
+    if (this.editCoupon !== undefined && this.editCoupon !== null && this.companyDetails != null) {
+      coupon.companiesID = this.companyDetails.id;
       coupon.id = this.editCoupon.id;
+      coupon.startDate = new Date();
+      coupon.endDate = new Date('2022-01-16');
       this.companyService.updateCoupon(coupon).subscribe(
         (response: Coupon) => {
           console.log(response);

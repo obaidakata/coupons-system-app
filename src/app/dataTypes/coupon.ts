@@ -8,6 +8,6 @@ export interface Coupon
   amount: number;
   price: number;
   image: string;
-  companyID: number;
+  companiesID: number;
   categoryID: number;
 }
