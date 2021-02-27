@@ -5,7 +5,6 @@ import {CompanyService} from '../services/company.service';
 import {Company} from '../dataTypes/company';
 import {HttpErrorResponse} from '@angular/common/http';
 import {NgForm} from '@angular/forms';
-import {Customer} from '../dataTypes/customer';
 
 @Component({
   selector: 'app-company',
@@ -25,17 +24,34 @@ export class CompanyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.companyService.login('company3@gmail.com', 'CUSTOMER4');
+    this.login();
+  }
+  private login(): void {
+    this.companyService.login('company3@gmail.com', 'CUSTOMER4').subscribe(
+      (response: boolean) => {
+        console.log('logIn');
+        console.log(response);
+        if (response)
+        {
+          this.getCompanyDetails();
+          this.getCompanyCoupons();
+        }
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message + 'login');
+      }
+    );
+  }
+  private getCompanyDetails(): void {
     this.companyService.getCompanyDetails().subscribe(
       (response: Company) => {
         this.companyDetails = response;
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        alert(error.message + 'getCompanyDetails');
       }
     );
-    this.getCompanyCoupons();
   }
   private getCompanyCoupons(): void {
     this.companyService.getCompanyCoupons().subscribe(
@@ -44,10 +60,29 @@ export class CompanyComponent implements OnInit {
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        alert(error.message + 'getCompanyCoupons');
       }
     );
   }
+  public onAddCoupon(addForm: NgForm): void{
+    document.getElementById('add-coupon-form')?.click();
+    const coupon: Coupon = addForm.value;
+    coupon.startDate = new Date();
+    coupon.endDate = new Date('2022-01-16');
+    console.log(coupon);
+    this.companyService.addCoupon(coupon).subscribe(
+      (response: Coupon) => {
+        console.log(response);
+        this.getCompanyCoupons();
+        addForm.reset();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+        addForm.reset();
+      }
+  );
+  }
+
   public onOpenModalCoupon(coupon: Coupon | null, mode: string): void {
     const companyContainer = document.getElementById('coupon-container');
     const button = document.createElement('button');
@@ -68,24 +103,6 @@ export class CompanyComponent implements OnInit {
 
     companyContainer?.appendChild(button);
     button.click();
-  }
-
-  public onAddCoupon(addForm: NgForm): void{
-    document.getElementById('add-coupon-form')?.click();
-    console.log(addForm.value);
-    const coupon: Coupon = addForm.value;
-    coupon.companyID = (this.companyDetails?.id as number);
-    this.companyService.addCoupon(coupon).subscribe(
-      (response: Coupon) => {
-        console.log(response);
-        this.getCompanyCoupons();
-        addForm.reset();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-        addForm.reset();
-      }
-    );
   }
   public onUpdateCoupon(coupon: Coupon): void {
     if (this.editCoupon !== undefined && this.editCoupon !== null) {
