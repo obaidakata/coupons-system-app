@@ -36,4 +36,8 @@ export class CustomerService implements ClientService{
   public getCustomerDetails(): Observable<Customer> {
     return this.http.get<Customer>(`${this.customerAPIURL}`);
   }
+
+  public getAllCoupons(): Observable<Array<Coupon>> {
+    return this.http.get<Array<Coupon>>(`${this.customerAPIURL}/AllCompanies`);
+  }
 }

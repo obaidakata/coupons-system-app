@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Coupon} from '../dataTypes/coupon';
 import {AdminService} from '../services/admin.service';
 import {CompanyService} from '../services/company.service';
@@ -26,6 +26,7 @@ export class CompanyComponent implements OnInit {
   public deleteCoupon: Coupon | null;
   public companyDetails: Company | null;
   public categories: string[];
+  // @ViewChild('radios1') radios1: ElementRef;
   constructor(private companyService: CompanyService) {
     this.companyCoupons = [];
     this.editCoupon = null;
@@ -156,4 +157,8 @@ export class CompanyComponent implements OnInit {
       );
     }
   }
+  // public reset(): void{
+  //   // this.radios1.nativeElement.checke
+  //
+  // }
 }
