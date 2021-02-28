@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loginWithTheLoginType('company2@gmail.com', 'company2', 1);
   }
   public login(loginForm: NgForm): void
   {
@@ -40,15 +41,18 @@ export class LoginComponent implements OnInit {
     const email = formValue.email;
     const password = formValue.password;
     const loginType = Number(formValue.loginType);
+    this.loginWithTheLoginType(email, password, loginType);
+  }
+  private loginWithTheLoginType(email: string, password: string, loginType: number): void {
     const service = this.services[loginType];
     service?.login(email, password).subscribe(
       (response: boolean) => {
         console.log(response);
-        if (!response){
-            alert('Password or Email wrong!');
+        if (response){
+          this.app.onSuccessfulLogin(service.name);
         }
         else {
-          this.app.onSuccessfulLogin(service.name);
+          alert('Password or Email wrong!');
         }
       },
       (error: HttpErrorResponse) => {
@@ -57,5 +61,3 @@ export class LoginComponent implements OnInit {
     );
   }
 }
-// CUSTOMER4
-// company2@gmail.com

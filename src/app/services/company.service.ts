@@ -34,12 +34,12 @@ export class CompanyService  implements ClientService{
     return this.http.get<Array<Coupon>>(`${this.companyAPIURL}/coupons`);
   }
 
-  public getCompanyCouponsByCategory(category: number): Observable<Array<Coupon>> {
-    return this.http.get<Array<Coupon>>(`${this.companyAPIURL}/coupons/${category}`);
+  public getCompanyCouponsByCategory(category: string): Observable<Array<Coupon>> {
+    return this.http.get<Array<Coupon>>(`${this.companyAPIURL}/coupons/category/${category}`);
   }
 
   public getCompanyCouponsByMaxPrice(maxPrice: number): Observable<Array<Coupon>> {
-    return this.http.get<Array<Coupon>>(`${this.companyAPIURL}/coupons/${maxPrice}`);
+    return this.http.get<Array<Coupon>>(`${this.companyAPIURL}/coupons/price/${maxPrice}`);
   }
 
   public getCompanyDetails(): Observable<Company> {

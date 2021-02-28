@@ -5,6 +5,8 @@ import {CompanyService} from '../services/company.service';
 import {Company} from '../dataTypes/company';
 import {HttpErrorResponse} from '@angular/common/http';
 import {NgForm} from '@angular/forms';
+import {templateJitUrl} from '@angular/compiler';
+
 
 
 enum Category {
@@ -26,7 +28,14 @@ export class CompanyComponent implements OnInit {
   public deleteCoupon: Coupon | null;
   public companyDetails: Company | null;
   public categories: string[];
-  // @ViewChild('radios1') radios1: ElementRef;
+  @ViewChild('radios1') radios1: ElementRef | undefined;
+  @ViewChild('radios2') radios2: ElementRef | undefined;
+  @ViewChild('radios3') radios3: ElementRef | undefined;
+  @ViewChild('radios4') radios4: ElementRef | undefined;
+  public maxPrice = 0;
+  public currentRangePrice = 0;
+  public maxPriceInput: HTMLInputElement | null | undefined;
+  public currentCategory: number | undefined;
   constructor(private companyService: CompanyService) {
     this.companyCoupons = [];
     this.editCoupon = null;
@@ -38,6 +47,16 @@ export class CompanyComponent implements OnInit {
   ngOnInit(): void {
     this.getCompanyDetails();
     this.getCompanyCoupons();
+    this.maxPriceInput = document.getElementById('maxPriceInput') as HTMLInputElement;
+    this.reset();
+  }
+  private getRangeValue(): void{
+    const mostExpensiveCoupon = this.companyCoupons.reduce(
+      (accumulator, currentValue) => {
+        return (accumulator.price > currentValue.price ? accumulator : currentValue);
+      });
+    this.maxPrice = mostExpensiveCoupon.price;
+    this.currentRangePrice = this.maxPrice / 2;
   }
   private getCompanyDetails(): void {
     this.companyService.getCompanyDetails().subscribe(
@@ -54,6 +73,7 @@ export class CompanyComponent implements OnInit {
     this.companyService.getCompanyCoupons().subscribe(
       (response: Coupon[]) => {
         this.companyCoupons = response;
+        this.getRangeValue();
         console.log(response);
       },
       (error: HttpErrorResponse) => {
@@ -157,8 +177,62 @@ export class CompanyComponent implements OnInit {
       );
     }
   }
-  // public reset(): void{
-  //   // this.radios1.nativeElement.checke
-  //
-  // }
+  public reset(): void{
+    if (this.radios1 !== undefined) {
+      this.radios1.nativeElement.checked = false;
+    }
+
+    if (this.radios2 !== undefined) {
+      this.radios2.nativeElement.checked = false;
+    }
+
+    if (this.radios3 !== undefined) {
+      this.radios3.nativeElement.checked = false;
+    }
+
+    if (this.radios4 !== undefined) {
+      this.radios4.nativeElement.checked = false;
+    }
+    if (this.maxPriceInput != null) {
+      this.currentRangePrice = this.maxPrice / 2;
+    }
+    this.getCompanyCoupons();
+  }
+  public categoryChanged(category: number): void {
+    this.currentCategory = category;
+  }
+  public apply(): void{
+    if (this.currentCategory !== undefined) {
+      console.log(this.currentCategory + 'currentCategory');
+      this.companyService.getCompanyCouponsByCategory(this.categoryToString(this.currentCategory)).subscribe(
+        (response: Coupon[]) => {
+          this.companyCoupons = response;
+          this.getRangeValue();
+          console.log(response);
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message + 'getCompanyCoupons');
+        }
+      );
+    }
+  }
+  public categoryToString(category: number): string {
+    if (category === Category.Electricity) {
+      return 'Electricity';
+    }
+    else if (category === Category.Food) {
+      return 'Food';
+    }
+    else if (category === Category.Restaurant) {
+      return 'Restaurant';
+    }
+    else  {
+      return 'Vacation';
+    }
+  }
+  public maxPriceChanged(): void{
+    if (this.maxPriceInput != null) {
+      this.currentRangePrice = Number(this.maxPriceInput?.value);
+    }
+  }
 }

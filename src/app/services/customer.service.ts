@@ -26,11 +26,11 @@ export class CustomerService implements ClientService{
   }
 
   public getCustomerCouponsByCategory(category: number): Observable<Array<Coupon>> {
-    return this.http.get<Array<Coupon>>(`${this.customerAPIURL}/coupons/${category}`);
+    return this.http.get<Array<Coupon>>(`${this.customerAPIURL}/coupons/category/${category}`);
   }
 
   public getCustomerCouponsByMaxPrice(maxPrice: number): Observable<Array<Coupon>> {
-    return this.http.get<Array<Coupon>>(`${this.customerAPIURL}/coupons/${maxPrice}`);
+    return this.http.get<Array<Coupon>>(`${this.customerAPIURL}/coupons/price/${maxPrice}`);
   }
 
   public getCustomerDetails(): Observable<Customer> {
