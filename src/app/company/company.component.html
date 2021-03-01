@@ -8,25 +8,25 @@
 
     <div class="form-group float-left col-sm">
       <div class="form-check" >
-        <input  #radios1 (click)="categoryChanged(0)"  ngModel class="form-check-input" type="radio" name="categoryID" id="radios1" value=0>
+        <input  #radios1 (click)="categoryChanged('Food')"  ngModel class="form-check-input" type="radio" name="categoryID" id="radios1" value='Food'>
         <label class="form-check-label" for="exampleRadios1">
           Food
         </label>
       </div>
       <div class="form-check">
-        <input #radios2  (click)="categoryChanged(2)" ngModel class="form-check-input" type="radio" name="categoryID" id="radios2" value=1>
+        <input #radios2  (click)="categoryChanged('Electricity')" ngModel class="form-check-input" type="radio" name="categoryID" id="radios2" value='Electricity'>
         <label class="form-check-label" for="exampleRadios2">
           Electricity
         </label>
       </div>
       <div class="form-check disabled">
-        <input #radios3 (click)="categoryChanged(2)"  ngModel class="form-check-input" type="radio" name="categoryID" id="radios3" value=2>
+        <input #radios3 (click)="categoryChanged('Restaurant')"  ngModel class="form-check-input" type="radio" name="categoryID" id="radios3" value='Restaurant'>
         <label class="form-check-label" for="exampleRadios3">
           Restaurant
         </label>
       </div>
       <div class="form-check disabled">
-        <input #radios4  (click)="categoryChanged(3)" ngModel class="form-check-input" type="radio" name="categoryID" id="radios4" value=3>
+        <input #radios4  (click)="categoryChanged('Vacation')" ngModel class="form-check-input" type="radio" name="categoryID" id="radios4" value='Vacation'>
         <label class="form-check-label" for="exampleRadios3">
           Vacation
         </label>

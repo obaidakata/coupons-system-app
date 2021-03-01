@@ -27,7 +27,6 @@ export class CompanyComponent implements OnInit {
   public editCoupon: Coupon | null;
   public deleteCoupon: Coupon | null;
   public companyDetails: Company | null;
-  public categories: string[];
   @ViewChild('radios1') radios1: ElementRef | undefined;
   @ViewChild('radios2') radios2: ElementRef | undefined;
   @ViewChild('radios3') radios3: ElementRef | undefined;
@@ -35,13 +34,12 @@ export class CompanyComponent implements OnInit {
   public maxPrice = 0;
   public currentRangePrice = 0;
   public maxPriceInput: HTMLInputElement | null | undefined;
-  public currentCategory: number | undefined;
+  public currentCategory = '';
   constructor(private companyService: CompanyService) {
     this.companyCoupons = [];
     this.editCoupon = null;
     this.deleteCoupon = null;
     this.companyDetails = null;
-    this.categories = Object.keys(Category);
   }
 
   ngOnInit(): void {
@@ -198,13 +196,13 @@ export class CompanyComponent implements OnInit {
     }
     this.getCompanyCoupons();
   }
-  public categoryChanged(category: number): void {
+  public categoryChanged(category: string): void {
     this.currentCategory = category;
   }
   public apply(): void{
     if (this.currentCategory !== undefined) {
       console.log(this.currentCategory + 'currentCategory');
-      this.companyService.getCompanyCouponsByCategory(this.categoryToString(this.currentCategory)).subscribe(
+      this.companyService.getCompanyCouponsByCategory(this.currentCategory).subscribe(
         (response: Coupon[]) => {
           this.companyCoupons = response;
           this.getRangeValue();
@@ -214,20 +212,6 @@ export class CompanyComponent implements OnInit {
           alert(error.message + 'getCompanyCoupons');
         }
       );
-    }
-  }
-  public categoryToString(category: number): string {
-    if (category === Category.Electricity) {
-      return 'Electricity';
-    }
-    else if (category === Category.Food) {
-      return 'Food';
-    }
-    else if (category === Category.Restaurant) {
-      return 'Restaurant';
-    }
-    else  {
-      return 'Vacation';
     }
   }
   public maxPriceChanged(): void{
