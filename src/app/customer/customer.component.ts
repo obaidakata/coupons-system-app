@@ -46,7 +46,6 @@ export class CustomerComponent implements OnInit {
       console.log(this.currentCategory + ' currentCategory');
 
       if (this.ePageIndex === eCustomerIndexPage.showCompaniesCoupons ) {
-        console.log(this.ePageIndex + ' ? ' + eCustomerIndexPage.showCompaniesCoupons);
         this.customerService.getAllCouponsByCategory(this.currentCategory).subscribe(
           (response: Coupon[]) => {
             this.companyCoupons = response;
