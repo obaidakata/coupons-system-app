@@ -25,7 +25,7 @@ export class CustomerService implements ClientService{
     return this.http.get<Array<Coupon>>(`${this.customerAPIURL}/coupons`);
   }
 
-  public getCustomerCouponsByCategory(category: number): Observable<Array<Coupon>> {
+  public getCustomerCouponsByCategory(category: string): Observable<Array<Coupon>> {
     return this.http.get<Array<Coupon>>(`${this.customerAPIURL}/coupons/category/${category}`);
   }
 
@@ -39,5 +39,9 @@ export class CustomerService implements ClientService{
 
   public getAllCoupons(): Observable<Array<Coupon>> {
     return this.http.get<Array<Coupon>>(`${this.customerAPIURL}/AllCompanies`);
+  }
+
+  public getAllCouponsByCategory(category: string): Observable<Array<Coupon>> {
+    return this.http.get<Array<Coupon>>(`${this.customerAPIURL}/AllCompanies/${category}`);
   }
 }

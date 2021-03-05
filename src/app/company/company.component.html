@@ -1,64 +1,78 @@
 <div class="container">
+
   <div class="row">
-
-    <div class="col-sm">
-    <button class="btn btn-primary float-left" (click)="onOpenModalCoupon(null, 'add')" type="submit">Add Coupon</button>
+    <div class="col-sm-3">
+      <button class="btn btn-primary float-left" (click)="onOpenModalCoupon(null, 'add')" type="submit">Add Coupon</button>
     </div>
-
-
-    <div class="form-group float-left col-sm">
-      <div class="form-check" >
-        <input  #radios1 (click)="categoryChanged('Food')"  ngModel class="form-check-input" type="radio" name="categoryID" id="radios1" value='Food'>
-        <label class="form-check-label" for="exampleRadios1">
-          Food
-        </label>
-      </div>
-      <div class="form-check">
-        <input #radios2  (click)="categoryChanged('Electricity')" ngModel class="form-check-input" type="radio" name="categoryID" id="radios2" value='Electricity'>
-        <label class="form-check-label" for="exampleRadios2">
-          Electricity
-        </label>
-      </div>
-      <div class="form-check disabled">
-        <input #radios3 (click)="categoryChanged('Restaurant')"  ngModel class="form-check-input" type="radio" name="categoryID" id="radios3" value='Restaurant'>
-        <label class="form-check-label" for="exampleRadios3">
-          Restaurant
-        </label>
-      </div>
-      <div class="form-check disabled">
-        <input #radios4  (click)="categoryChanged('Vacation')" ngModel class="form-check-input" type="radio" name="categoryID" id="radios4" value='Vacation'>
-        <label class="form-check-label" for="exampleRadios3">
-          Vacation
-        </label>
-      </div>
+    <div class="col-sm-3">
+      <button class="btn btn-primary float-left" (click)="applyCategoryFilter()" type="submit">Filter by Category</button>
     </div>
-
-
-    <div class="col-sm">
-      <input type="range" id="maxPriceInput" (input)="maxPriceChanged()"  value="{{currentRangePrice}}" max="{{maxPrice}}" step="1">
-      <label> Max Price: {{currentRangePrice}}</label>
+    <div class="col-sm-3">
+      <button class="btn btn-primary float-left" (click)="applyMaxPriceFilter()" type="submit">Filter by max price</button>
     </div>
-
-    <div class="col-sm">
+    <div class="col-sm-3">
       <button class="btn btn-primary float-left" (click)="reset()" type="submit">Reset</button>
     </div>
+  </div>
 
-    <div class="col-sm">
-      <button class="btn btn-primary float-left" (click)="apply()" type="submit">Apply</button>
+
+  <div class="row">
+    <div class="form-group float-left col-sm-3">
+      <!--blank-->
     </div>
+
+    <div class="form-group float-left col-sm-3">
+      <div class="col-sm-3">
+        <div class="form-check" >
+          <input  #radios1 (click)="categoryChanged('Food')"  ngModel class="form-check-input" type="radio" name="categoryID" id="radios1" value='Food'>
+          <label class="form-check-label" for="exampleRadios1">
+            Food
+          </label>
+        </div>
+        <div class="form-check">
+          <input #radios2  (click)="categoryChanged('Electricity')" ngModel class="form-check-input" type="radio" name="categoryID" id="radios2" value='Electricity'>
+          <label class="form-check-label" for="exampleRadios2">
+            Electricity
+          </label>
+        </div>
+        <div class="form-check disabled">
+          <input #radios3 (click)="categoryChanged('Restaurant')"  ngModel class="form-check-input" type="radio" name="categoryID" id="radios3" value='Restaurant'>
+          <label class="form-check-label" for="exampleRadios3">
+            Restaurant
+          </label>
+        </div>
+        <div class="form-check disabled">
+          <input #radios4  (click)="categoryChanged('Vacation')" ngModel class="form-check-input" type="radio" name="categoryID" id="radios4" value='Vacation'>
+          <label class="form-check-label" for="exampleRadios3">
+            Vacation
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group float-left col-sm-3">
+      <div class="col-sm">
+      <input type="range" id="maxPriceInput" (input)="maxPriceChanged()"  value="{{currentRangePrice}}" max="{{maxPrice}}" step="1">
+      <label> Max Price: {{currentRangePrice}}</label>
+      </div>
+    </div>
+
+
 
   </div>
 </div>
+
+
 
 <div class="container align-bottom" id="coupon-container">
   <div class="row">
     <div *ngFor="let coupon of companyCoupons" class="col-md-6 col-xl-3">
       <div class="card m-b-30">
         <div class="card-body row">
-<!--          <div class="col-6">-->
-<!--            <a href=""><img src="{{coupon?.image}}" alt="" class="img-fluid rounded-circle w-60"></a>-->
-<!--            <a href=""><img src="{{coupon?.image}}" alt="" class="img-fluid rounded-circle w-60"></a>-->
-<!--          </div>-->
+          <!--          <div class="col-6">-->
+          <!--            <a href=""><img src="{{coupon?.image}}" alt="" class="img-fluid rounded-circle w-60"></a>-->
+          <!--            <a href=""><img src="{{coupon?.image}}" alt="" class="img-fluid rounded-circle w-60"></a>-->
+          <!--          </div>-->
           <div class="col-6 card-title align-self-center mb-0">
             <h5>{{coupon?.title}}</h5>
           </div>
@@ -103,15 +117,15 @@
             </div>
 
             <div class="form-group">
-                <label for="startDate">Start Date</label>
-                <input type="date" id="startDate" name="startDate" required>
-             </div>
+              <label for="startDate">Start Date</label>
+              <input type="date" id="startDate" name="startDate" required>
+            </div>
 
-<!--            <div class="form-group">-->
-<!--              <label for="endDate">End Date</label>-->
-<!--              <input type="date" id="endDate" name="endDate" placeholder="End Date" required pattern="\d{4}-\d{2}-\d{2}">-->
-<!--              <span class="validity"></span>-->
-<!--            </div>-->
+            <!--            <div class="form-group">-->
+            <!--              <label for="endDate">End Date</label>-->
+            <!--              <input type="date" id="endDate" name="endDate" placeholder="End Date" required pattern="\d{4}-\d{2}-\d{2}">-->
+            <!--              <span class="validity"></span>-->
+            <!--            </div>-->
 
 
             <div class="form-group">

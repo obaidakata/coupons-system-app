@@ -1,3 +1,4 @@
+<div class="container">
 <div class="btn-group btn-group-toggle" data-toggle="buttons">
   <label (click)="onSwitchData('Companies')" class="btn btn-secondary active">
     <input  type="radio" name="options" id="option1" autocomplete="off"> Companies coupons
@@ -6,8 +7,59 @@
     <input  type="radio" name="options" id="option2" autocomplete="off"> My coupons
   </label>
 </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <!--      blank-->
+    </div>
+    <div class="col-sm-3">
+      <button class="btn btn-primary float-left" (click)="applyCategoryFilter()" type="submit">Filter by Category</button>
+    </div>
+<!--    <div class="col-sm-3">-->
+<!--      <button class="btn btn-primary float-left" (click)="applyMaxPriceFilter()" type="submit">Filter by max price</button>-->
+<!--    </div>-->
+<!--    <div class="col-sm-3">-->
+<!--      <button class="btn btn-primary float-left" (click)="reset()" type="submit">Reset</button>-->
+<!--    </div>-->
+  </div>
+  <div class="row">
+    <div class="form-group float-left col-sm-3">
+      <!--blank-->
+    </div>
 
-<div *ngIf="showMyCoupons" class="container" id="coupon-container">
+    <div class="form-group float-left col-sm-3">
+      <div class="col-sm-3">
+        <div class="form-check" >
+          <input  #radios1 (click)="categoryChanged('Food')"  ngModel class="form-check-input" type="radio" name="categoryID" id="radios1" value='Food'>
+          <label class="form-check-label" text="Food">
+            Food
+          </label>
+        </div>
+        <div class="form-check">
+          <input #radios2  (click)="categoryChanged('Electricity')" ngModel class="form-check-input" type="radio" name="categoryID" id="radios2" value='Electricity'>
+          <label class="form-check-label" text="Electricity">
+            Electricity
+          </label>
+        </div>
+        <div class="form-check disabled">
+          <input #radios3 (click)="categoryChanged('Restaurant')"  ngModel class="form-check-input" type="radio" name="categoryID" id="radios3" value='Restaurant'>
+          <label class="form-check-label" text="Restaurant">
+            Restaurant
+          </label>
+        </div>
+        <div class="form-check disabled">
+          <input #radios4  (click)="categoryChanged('Vacation')" ngModel class="form-check-input" type="radio" name="categoryID" id="radios4" value='Vacation'>
+          <label class="form-check-label" text="Vacation">
+            Vacation
+          </label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div *ngIf="isThisPageOnScreen('showMyCoupons')" class="container" id="coupon-container">
   <div class="row">
     <div *ngFor="let coupon of customerCoupons" class="col-md-6 col-xl-3">
       <div class="card m-b-30">
@@ -59,7 +111,7 @@
 </div>
 
 <!-- Notification for no coupons -->
-<div *ngIf="customerCoupons?.length == 0 && showMyCoupons" class="col-lg-12 col-md-12 col-xl-12">
+<div *ngIf="customerCoupons?.length == 0 && isThisPageOnScreen('showMyCoupons')" class="col-lg-12 col-md-12 col-xl-12">
   <div class="alert alert-info" role="alert">
     <h4 class="alert-heading">You didn't purchase any coupon yet!</h4>
     <p>No coupons were found.</p>
@@ -67,7 +119,7 @@
 </div>
 
 
-<div *ngIf="showCompaniesCoupons">
+<div *ngIf="isThisPageOnScreen('showCompaniesCoupons')" class="container" id="coupon-container1">
     <div class="container" id="coupon2-container">
       <div class="row">
         <div *ngFor="let coupon of companyCoupons" class="col-md-6 col-xl-3">
@@ -98,4 +150,4 @@
         </div>
       </div>
     </div>
-</div>
+</div>\

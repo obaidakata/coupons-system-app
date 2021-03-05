@@ -6,31 +6,72 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {NgForm} from '@angular/forms';
 import {CustomerService} from '../services/customer.service';
 import {Customer} from '../dataTypes/customer';
-
+import {eCustomerIndexPage} from '../models/eCustomerIndexPage';
 
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
   styleUrls: ['./customer.component.css']
 })
+
+
 export class CustomerComponent implements OnInit {
   public customerCoupons: Coupon[];
   public customerDetails: Customer | null;
   public purchaseCoupon: Coupon | null;
-  public showMyCoupons = false;
-  public showCompaniesCoupons = true;
   public companyCoupons: Coupon[];
+  public currentCategory = '';
+  public ePageIndex;
+
   constructor(private customerService: CustomerService) {
     this.customerCoupons = [];
     this.companyCoupons = [];
     this.customerDetails = null;
     this.purchaseCoupon = null;
+    this.ePageIndex = eCustomerIndexPage.showCompaniesCoupons;
   }
 
   ngOnInit(): void {
     this.getCustomerDetails();
     this.getCustomerCoupons();
     this.getAllCoupons();
+  }
+
+  public isThisPageOnScreen(input: string): boolean {
+    return input === this.ePageIndex.toString();
+  }
+
+  public applyCategoryFilter(): void{
+    if (this.currentCategory !== undefined) {
+      console.log(this.currentCategory + ' currentCategory');
+
+      if (this.ePageIndex === eCustomerIndexPage.showCompaniesCoupons ) {
+        console.log(this.ePageIndex + ' ? ' + eCustomerIndexPage.showCompaniesCoupons);
+        this.customerService.getAllCouponsByCategory(this.currentCategory).subscribe(
+          (response: Coupon[]) => {
+            this.companyCoupons = response;
+            console.log(response);
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message + ' getCustomerCoupons');
+          }
+        );
+      }
+      else {
+        this.customerService.getCustomerCouponsByCategory(this.currentCategory).subscribe(
+          (response: Coupon[]) => {
+            this.customerCoupons = response;
+            console.log(response);
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message + ' getCustomerCoupons');
+          }
+        );
+      }
+    }
+  }
+  public categoryChanged(category: string): void {
+    this.currentCategory = category;
   }
   private getAllCoupons(): void {
     this.customerService.getAllCoupons().subscribe(
@@ -104,14 +145,15 @@ export class CustomerComponent implements OnInit {
     console.log(collection);
     if (collection === 'Companies')
     {
-      this.showMyCoupons = false;
-      this.showCompaniesCoupons = true;
+      this.ePageIndex = eCustomerIndexPage.showCompaniesCoupons;
+
     }
     else if (collection === 'My')
     {
-      this.showMyCoupons = true;
-      this.showCompaniesCoupons = false;
+      this.ePageIndex = eCustomerIndexPage.showMyCoupons;
     }
 
   }
+
+
 }

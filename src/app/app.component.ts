@@ -5,6 +5,7 @@ import {Company} from './dataTypes/company';
 import {HttpErrorResponse} from '@angular/common/http';
 import {element} from 'protractor';
 import {NgForm} from '@angular/forms';
+import {Console} from 'inspector';
 
 
 
@@ -38,6 +39,7 @@ export class AppComponent implements OnInit {
   public onLogOut(): void
   {
     this.showLogin = true;
+
     this.showAdmin = this.showCompany = this.showCustomer = false;
   }
 }

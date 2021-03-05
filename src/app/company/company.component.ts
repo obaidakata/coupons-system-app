@@ -53,7 +53,7 @@ export class CompanyComponent implements OnInit {
       (accumulator, currentValue) => {
         return (accumulator.price > currentValue.price ? accumulator : currentValue);
       });
-    this.maxPrice = mostExpensiveCoupon.price;
+    this.maxPrice = mostExpensiveCoupon.price + 1;
     this.currentRangePrice = this.maxPrice / 2;
   }
   private getCompanyDetails(): void {
@@ -199,13 +199,12 @@ export class CompanyComponent implements OnInit {
   public categoryChanged(category: string): void {
     this.currentCategory = category;
   }
-  public apply(): void{
+  public applyCategoryFilter(): void{
     if (this.currentCategory !== undefined) {
       console.log(this.currentCategory + 'currentCategory');
       this.companyService.getCompanyCouponsByCategory(this.currentCategory).subscribe(
         (response: Coupon[]) => {
           this.companyCoupons = response;
-          this.getRangeValue();
           console.log(response);
         },
         (error: HttpErrorResponse) => {
@@ -214,6 +213,25 @@ export class CompanyComponent implements OnInit {
       );
     }
   }
+
+  public applyMaxPriceFilter(): void{
+    if (this.currentRangePrice !== undefined) {
+      console.log(this.currentRangePrice + 'currentMaxPrice');
+      this.companyService.getCompanyCouponsByMaxPrice(this.currentRangePrice).subscribe(
+        (response: Coupon[]) => {
+          this.companyCoupons = response;
+          // this.getRangeValue();
+          console.log(response);
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message + 'getCompanyCoupons');
+        }
+      );
+    }
+  }
+
+
+
   public maxPriceChanged(): void{
     if (this.maxPriceInput != null) {
       this.currentRangePrice = Number(this.maxPriceInput?.value);

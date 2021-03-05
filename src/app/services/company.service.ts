@@ -35,6 +35,7 @@ export class CompanyService  implements ClientService{
   }
 
   public getCompanyCouponsByCategory(category: string): Observable<Array<Coupon>> {
+    console.log(this.companyAPIURL + '     :company api url');
     return this.http.get<Array<Coupon>>(`${this.companyAPIURL}/coupons/category/${category}`);
   }
 

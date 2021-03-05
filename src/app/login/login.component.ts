@@ -33,7 +33,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loginWithTheLoginType('company2@gmail.com', 'company2', 1);
   }
   public login(loginForm: NgForm): void
   {
