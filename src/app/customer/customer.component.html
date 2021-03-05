@@ -1,19 +1,21 @@
 <div class="container">
-<div class="btn-group btn-group-toggle" data-toggle="buttons">
-  <label (click)="onSwitchData('Companies')" class="btn btn-secondary active">
-    <input  type="radio" name="options" id="option1" autocomplete="off"> Companies coupons
-  </label>
-  <label (click)="onSwitchData('My')" class="btn btn-secondary">
+  <div class="btn-group btn-group-toggle mt-6" data-toggle="buttons">
+    <label (click)="onSwitchData('Companies')" class="btn btn-secondary active">
+      <input  type="radio" name="options" id="option1" autocomplete="off"> Companies coupons
+    </label>
+    <label (click)="onSwitchData('My')" class="btn btn-secondary">
     <input  type="radio" name="options" id="option2" autocomplete="off"> My coupons
   </label>
-</div>
-  <div class="row">
-    <div class="col-sm-3">
-      <!--      blank-->
-    </div>
+  </div>
+
+  <!-- Blue Buttons row -->
+  <div class="mt-auto p-1 row">
+
+    <!--  Category button   -->
     <div class="col-sm-3">
       <button class="btn btn-primary float-left" (click)="applyCategoryFilter()" type="submit">Filter by Category</button>
     </div>
+
 <!--    <div class="col-sm-3">-->
 <!--      <button class="btn btn-primary float-left" (click)="applyMaxPriceFilter()" type="submit">Filter by max price</button>-->
 <!--    </div>-->
@@ -21,11 +23,15 @@
 <!--      <button class="btn btn-primary float-left" (click)="reset()" type="submit">Reset</button>-->
 <!--    </div>-->
   </div>
-  <div class="row">
-    <div class="form-group float-left col-sm-3">
-      <!--blank-->
-    </div>
 
+  <!-- Secound row of items under buttons -->
+  <div class="row">
+
+<!--    <div class="form-group float-left col-sm-3">-->
+<!--      &lt;!&ndash;blank&ndash;&gt;-->
+<!--    </div>-->
+
+    <!--Category radio    -->
     <div class="form-group float-left col-sm-3">
       <div class="col-sm-3">
         <div class="form-check" >
