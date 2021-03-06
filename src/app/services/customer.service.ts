@@ -44,4 +44,8 @@ export class CustomerService implements ClientService{
   public getAllCouponsByCategory(category: string): Observable<Array<Coupon>> {
     return this.http.get<Array<Coupon>>(`${this.customerAPIURL}/AllCompanies/${category}`);
   }
+
+  public getAllCouponsByMaxPrice(maxPrice: number): Observable<Array<Coupon>> {
+    return this.http.get<Array<Coupon>>(`${this.customerAPIURL}/AllCoupons/price/${maxPrice}`);
+  }
 }

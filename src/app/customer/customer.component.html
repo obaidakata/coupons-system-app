@@ -9,19 +9,19 @@
   </div>
 
   <!-- Blue Buttons row -->
-  <div class="mt-auto p-1 row">
+  <div class="mt-auto p-2 row">
 
     <!--  Category button   -->
     <div class="col-sm-3">
       <button class="btn btn-primary float-left" (click)="applyCategoryFilter()" type="submit">Filter by Category</button>
     </div>
-
-<!--    <div class="col-sm-3">-->
-<!--      <button class="btn btn-primary float-left" (click)="applyMaxPriceFilter()" type="submit">Filter by max price</button>-->
-<!--    </div>-->
-<!--    <div class="col-sm-3">-->
-<!--      <button class="btn btn-primary float-left" (click)="reset()" type="submit">Reset</button>-->
-<!--    </div>-->
+    <!--  MaxPrice button   -->
+    <div class="col-sm-3">
+      <button class="btn btn-primary float-left" (click)="applyMaxPriceFilter()" type="submit">Filter by max price</button>
+    </div>
+    <div class="col-sm-3">
+      <button class="btn btn-primary float-left" (click)="reset()" type="submit">Reset</button>
+    </div>
   </div>
 
   <!-- Secound row of items under buttons -->
@@ -58,6 +58,13 @@
             Vacation
           </label>
         </div>
+      </div>
+    </div>
+    <!--MaxPrice range    -->
+    <div class="form-group float-left col-sm-3">
+      <div class="col-sm">
+          <input type="range" id="maxPriceInput" (input)="maxPriceChanged()"  value="{{currentRangePrice}}" max="{{maxPrice}}" step="1">
+          <label> Max Price: {{currentRangePrice}}</label>
       </div>
     </div>
 

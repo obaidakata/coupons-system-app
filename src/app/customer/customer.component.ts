@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Coupon} from '../dataTypes/coupon';
 import {Company} from '../dataTypes/company';
 import {CompanyService} from '../services/company.service';
@@ -16,12 +16,23 @@ import {eCustomerIndexPage} from '../models/eCustomerIndexPage';
 
 
 export class CustomerComponent implements OnInit {
+  // MyCoupons
   public customerCoupons: Coupon[];
+  // AllCoupons
+  public companyCoupons: Coupon[];
+
   public customerDetails: Customer | null;
   public purchaseCoupon: Coupon | null;
-  public companyCoupons: Coupon[];
   public currentCategory = '';
   public ePageIndex;
+
+  public maxPrice = 0;
+  public currentRangePrice = 0;
+  public maxPriceInput: HTMLInputElement | null | undefined;
+  @ViewChild('radios1') radios1: ElementRef | undefined;
+  @ViewChild('radios2') radios2: ElementRef | undefined;
+  @ViewChild('radios3') radios3: ElementRef | undefined;
+  @ViewChild('radios4') radios4: ElementRef | undefined;
 
   constructor(private customerService: CustomerService) {
     this.customerCoupons = [];
@@ -34,7 +45,32 @@ export class CustomerComponent implements OnInit {
   ngOnInit(): void {
     this.getCustomerDetails();
     this.getCustomerCoupons();
+    this.maxPriceInput = document.getElementById('maxPriceInput') as HTMLInputElement;
     this.getAllCoupons();
+    this.reset();
+  }
+
+  public reset(): void{
+    if (this.radios1 !== undefined) {
+      this.radios1.nativeElement.checked = false;
+    }
+
+    if (this.radios2 !== undefined) {
+      this.radios2.nativeElement.checked = false;
+    }
+
+    if (this.radios3 !== undefined) {
+      this.radios3.nativeElement.checked = false;
+    }
+
+    if (this.radios4 !== undefined) {
+      this.radios4.nativeElement.checked = false;
+    }
+    if (this.maxPriceInput != null) {
+      this.currentRangePrice = this.maxPrice / 2;
+    }
+    this.getAllCoupons();
+    this.getCustomerCoupons();
   }
 
   public isThisPageOnScreen(input: string): boolean {
@@ -72,11 +108,13 @@ export class CustomerComponent implements OnInit {
   public categoryChanged(category: string): void {
     this.currentCategory = category;
   }
+
   private getAllCoupons(): void {
     this.customerService.getAllCoupons().subscribe(
       (response: Coupon[]) => {
         this.companyCoupons = response.sort((one, two) => (one.title > two.title ? -1 : 1));
         console.log('getAllCoupons');
+        this.getRangeValueAllCompaniesCoupons();
         console.log(response);
       },
       (error: HttpErrorResponse) => {
@@ -95,6 +133,7 @@ export class CustomerComponent implements OnInit {
       }
     );
   }
+
   private getCustomerCoupons(): void {
     this.customerService.getCustomerCoupons().subscribe(
       (response: Coupon[]) => {
@@ -142,17 +181,82 @@ export class CustomerComponent implements OnInit {
   public onSwitchData(collection: string): void
   {
     console.log(collection);
+
     if (collection === 'Companies')
     {
       this.ePageIndex = eCustomerIndexPage.showCompaniesCoupons;
-
+      this.getRangeValueAllCompaniesCoupons();
     }
     else if (collection === 'My')
     {
       this.ePageIndex = eCustomerIndexPage.showMyCoupons;
+      this.getRangeValueAllCustomersCoupons();
     }
 
   }
 
+  public applyMaxPriceFilter(): void{
+    if (this.currentRangePrice !== undefined) {
+      console.log(this.currentRangePrice + 'currentMaxPrice');
+      this.customerService.getAllCouponsByMaxPrice(this.currentRangePrice).subscribe(
+        (response: Coupon[]) => {
+          this.companyCoupons = response;
+          console.log(response);
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message + 'getCompanyCoupons');
+        }
+      );
+      this.customerService.getCustomerCouponsByMaxPrice(this.currentRangePrice).subscribe(
+        (response: Coupon[]) => {
+          this.customerCoupons = response;
+          console.log(response);
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message + 'getCompanyCoupons');
+        });
+    }
+  }
+
+  private getRangeValueAllCompaniesCoupons(): void{
+    this.customerService.getAllCoupons().subscribe(
+      (response: Coupon[]) => {
+        this.companyCoupons = response;
+        console.log(response);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message + 'getCustomerCoupons');
+      }
+    );
+    const mostExpensiveCoupon = this.companyCoupons.reduce(
+      (accumulator, currentValue) => {
+        return (accumulator.price > currentValue.price ? accumulator : currentValue);
+      });
+    this.maxPrice = mostExpensiveCoupon.price + 1;
+    this.currentRangePrice = this.maxPrice / 2;
+  }
+  private getRangeValueAllCustomersCoupons(): void{
+    this.customerService.getCustomerCoupons().subscribe(
+      (response: Coupon[]) => {
+        this.customerCoupons = response;
+        console.log(response);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message + 'getCustomerCoupons');
+      }
+    );
+    const mostExpensiveCoupon = this.companyCoupons.reduce(
+      (accumulator, currentValue) => {
+        return (accumulator.price > currentValue.price ? accumulator : currentValue);
+      });
+    this.maxPrice = mostExpensiveCoupon.price + 1;
+    this.currentRangePrice = this.maxPrice / 2;
+  }
+
+  public maxPriceChanged(): void{
+    if (this.maxPriceInput != null) {
+      this.currentRangePrice = Number(this.maxPriceInput?.value);
+    }
+  }
 
 }
