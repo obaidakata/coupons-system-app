@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
   }
   public login(loginForm: NgForm): void
   {
+    console.log(loginForm.value);
     const formValue = loginForm.value;
     const email = formValue.email;
     const password = formValue.password;
@@ -43,6 +44,7 @@ export class LoginComponent implements OnInit {
     this.loginWithTheLoginType(email, password, loginType);
   }
   private loginWithTheLoginType(email: string, password: string, loginType: number): void {
+    console.log(email);
     const service = this.services[loginType];
     service?.login(email, password).subscribe(
       (response: boolean) => {

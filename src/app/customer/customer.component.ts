@@ -228,12 +228,14 @@ export class CustomerComponent implements OnInit {
         alert(error.message + 'getCustomerCoupons');
       }
     );
-    const mostExpensiveCoupon = this.companyCoupons.reduce(
-      (accumulator, currentValue) => {
-        return (accumulator.price > currentValue.price ? accumulator : currentValue);
-      });
-    this.maxPrice = mostExpensiveCoupon.price + 1;
-    this.currentRangePrice = this.maxPrice / 2;
+    if (this.companyCoupons !== null && this.companyCoupons.length > 0) {
+      const mostExpensiveCoupon = this.companyCoupons.reduce(
+        (accumulator, currentValue) => {
+          return (accumulator.price > currentValue.price ? accumulator : currentValue);
+        });
+      this.maxPrice = mostExpensiveCoupon.price + 1;
+      this.currentRangePrice = this.maxPrice / 2;
+    }
   }
   private getRangeValueAllCustomersCoupons(): void{
     this.customerService.getCustomerCoupons().subscribe(
@@ -245,12 +247,14 @@ export class CustomerComponent implements OnInit {
         alert(error.message + 'getCustomerCoupons');
       }
     );
-    const mostExpensiveCoupon = this.companyCoupons.reduce(
-      (accumulator, currentValue) => {
-        return (accumulator.price > currentValue.price ? accumulator : currentValue);
-      });
-    this.maxPrice = mostExpensiveCoupon.price + 1;
-    this.currentRangePrice = this.maxPrice / 2;
+    if (this.companyCoupons !== null && this.companyCoupons.length > 0) {
+      const mostExpensiveCoupon = this.companyCoupons.reduce(
+        (accumulator, currentValue) => {
+          return (accumulator.price > currentValue.price ? accumulator : currentValue);
+        });
+      this.maxPrice = mostExpensiveCoupon.price + 1;
+      this.currentRangePrice = this.maxPrice / 2;
+    }
   }
 
   public maxPriceChanged(): void{

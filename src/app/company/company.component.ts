@@ -48,14 +48,17 @@ export class CompanyComponent implements OnInit {
     this.maxPriceInput = document.getElementById('maxPriceInput') as HTMLInputElement;
     this.reset();
   }
-  private getRangeValue(): void{
-    const mostExpensiveCoupon = this.companyCoupons.reduce(
-      (accumulator, currentValue) => {
-        return (accumulator.price > currentValue.price ? accumulator : currentValue);
-      });
-    this.maxPrice = mostExpensiveCoupon.price + 1;
-    this.currentRangePrice = this.maxPrice / 2;
+  private getRangeValue(): void {
+    if (this.companyCoupons !== null && this.companyCoupons.length > 0) {
+      const mostExpensiveCoupon = this.companyCoupons.reduce(
+        (accumulator, currentValue) => {
+          return (accumulator.price > currentValue.price ? accumulator : currentValue);
+        });
+      this.maxPrice = mostExpensiveCoupon.price + 1;
+      this.currentRangePrice = this.maxPrice / 2;
+    }
   }
+
   private getCompanyDetails(): void {
     this.companyService.getCompanyDetails().subscribe(
       (response: Company) => {
@@ -105,8 +108,6 @@ export class CompanyComponent implements OnInit {
     document.getElementById('add-coupon-form')?.click();
     // const category = addForm.value.
     const coupon: Coupon = addForm.value;
-    coupon.startDate = new Date();
-    coupon.endDate = new Date('2022-01-16');
     console.log('onAddCoupon');
     console.log(coupon);
     this.companyService.addCoupon(coupon).subscribe(
@@ -144,11 +145,10 @@ export class CompanyComponent implements OnInit {
     button.click();
   }
   public onUpdateCoupon(coupon: Coupon): void {
+    console.log(coupon);
     if (this.editCoupon !== undefined && this.editCoupon !== null && this.companyDetails != null) {
       coupon.companiesID = this.companyDetails.id;
       coupon.id = this.editCoupon.id;
-      coupon.startDate = new Date();
-      coupon.endDate = new Date('2022-01-16');
       this.companyService.updateCoupon(coupon).subscribe(
         (response: Coupon) => {
           console.log(response);

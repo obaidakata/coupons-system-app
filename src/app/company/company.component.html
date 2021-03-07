@@ -117,8 +117,13 @@
             </div>
 
             <div class="form-group">
-              <label for="startDate">Start Date</label>
-              <input type="date" id="startDate" name="startDate" required>
+              <label for="startDate">Start Date:  </label>
+              <input type="date" ngModel id="startDate" class="form-control" name="startDate" required>
+            </div>
+
+            <div class="form-group">
+              <label for="endDate">End Date:  </label>
+              <input type="date" ngModel id="endDate" class="form-control" name="endDate" required>
             </div>
 
             <!--            <div class="form-group">-->
@@ -185,6 +190,7 @@
           </button>
         </div>
         <div class="modal-body">
+
           <form #editForm="ngForm">
 
             <div class="form-group">
@@ -198,6 +204,16 @@
             </div>
 
             <div class="form-group">
+              <label for="startDate">Start Date:  </label>
+              <input type="date" ngModel="{{editCoupon?.startDate}}" id="startDateUpdate" class="form-control" name="startDate" aria-describedby="emailHelp" required>
+            </div>
+
+            <div class="form-group">
+              <label for="endDate">End Date:  </label>
+              <input type="date" ngModel="{{editCoupon?.endDate}}" id="endDateUpdate" class="form-control" name="endDate" aria-describedby="emailHelp" required>
+            </div>
+
+            <div class="form-group">
               <label for="amount">Amount</label>
               <input  type="text" min="1" step="1" ngModel="{{editCoupon?.amount}}" name="amount" class="form-control" id="amountUpdate" aria-describedby="emailHelp" placeholder="Description">
             </div>
@@ -208,10 +224,10 @@
               <label for="price">Price</label>
               <input  type="number" min="0" step="0.1" ngModel="{{editCoupon?.price}}" name="price" class="form-control" id="priceUpdate" aria-describedby="emailHelp" placeholder="Price">
             </div>
-
+              <!--     Radio       -->
             <div class="form-group" >
               <div class="form-check" >
-                <input  ngModel class="form-check-input" type="radio" name="categoryID" id="categoryIDUpdate1" value=0 required>
+                <input  ngModel class="form-check-input" type="radio" name="categoryID" checked="checked" id="categoryIDUpdate1" value=0 required>
                 <label class="form-check-label" for="exampleRadios1">
                   Food
                 </label>
@@ -238,7 +254,7 @@
 
             <div class="modal-footer">
               <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
-              <button (click)="onUpdateCoupon(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+              <button (click)="onUpdateCoupon(editForm.value)" [disabled]="editForm.invalid"  data-dismiss="modal" class="btn btn-primary" >Save changes</button>
             </div>
           </form>
         </div>
