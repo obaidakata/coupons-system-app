@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  companyAPIURL: 'http://localhost:8080/company',
-  customerAPIURL: 'http://localhost:8080/customer',
-  adminAPIURL: 'http://localhost:8080/admin'
+  companyAPIURL: 'http://18.207.15.2:5000/company',
+  customerAPIURL: 'http://18.207.15.2:5000/customer',
+  adminAPIURL: 'http://18.207.15.2:5000/admin'
 };
 
 /*
