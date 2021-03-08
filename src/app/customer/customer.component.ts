@@ -88,7 +88,7 @@ export class CustomerComponent implements OnInit {
             console.log(response);
           },
           (error: HttpErrorResponse) => {
-            alert(error.message + ' getCustomerCoupons');
+            alert(error.error.message + ' getCustomerCoupons');
           }
         );
       }
@@ -99,7 +99,7 @@ export class CustomerComponent implements OnInit {
             console.log(response);
           },
           (error: HttpErrorResponse) => {
-            alert(error.message + ' getCustomerCoupons');
+            alert(error.error.message + ' getCustomerCoupons');
           }
         );
       }
@@ -118,7 +118,7 @@ export class CustomerComponent implements OnInit {
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message + 'getCustomerDetails');
+        alert(error.error.message + 'getCustomerDetails');
       }
     );
   }
@@ -129,7 +129,7 @@ export class CustomerComponent implements OnInit {
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message + 'getCustomerDetails');
+        alert(error.error.message + 'getCustomerDetails');
       }
     );
   }
@@ -141,7 +141,7 @@ export class CustomerComponent implements OnInit {
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message + 'getCustomerCoupons');
+        alert(error.error.message + 'getCustomerCoupons');
       }
     );
   }
@@ -169,7 +169,7 @@ export class CustomerComponent implements OnInit {
             this.getCustomerCoupons();
           },
           (error: HttpErrorResponse) => {
-            alert(error.message);
+            alert(error.error.message);
           }
         );
       }
@@ -204,7 +204,7 @@ export class CustomerComponent implements OnInit {
           console.log(response);
         },
         (error: HttpErrorResponse) => {
-          alert(error.message + 'getCompanyCoupons');
+          alert(error.error.message + 'getCompanyCoupons');
         }
       );
       this.customerService.getCustomerCouponsByMaxPrice(this.currentRangePrice).subscribe(
@@ -213,7 +213,7 @@ export class CustomerComponent implements OnInit {
           console.log(response);
         },
         (error: HttpErrorResponse) => {
-          alert(error.message + 'getCompanyCoupons');
+          alert(error.error.message + 'getCompanyCoupons');
         });
     }
   }
@@ -225,7 +225,7 @@ export class CustomerComponent implements OnInit {
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message + 'getCustomerCoupons');
+        alert(error.error.message + 'getCustomerCoupons');
       }
     );
     if (this.companyCoupons !== null && this.companyCoupons.length > 0) {
@@ -244,7 +244,7 @@ export class CustomerComponent implements OnInit {
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message + 'getCustomerCoupons');
+        alert(error.error.message + 'getCustomerCoupons');
       }
     );
     if (this.companyCoupons !== null && this.companyCoupons.length > 0) {

@@ -7,6 +7,7 @@ import {Company} from '../dataTypes/company';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ClientService} from '../services/ClientService';
 import {AppComponent} from '../app.component';
+import {Customer} from '../dataTypes/customer';
 
 enum ClientType
 {
@@ -24,7 +25,8 @@ enum ClientType
 export class LoginComponent implements OnInit {
   public currentClientType = ClientType.Customer;
   public services: ClientService[] ;
-
+  public loginForm = true;
+  public customerSignUP = true;
   constructor(private adminService: AdminService,
               private companyService: CompanyService,
               private customerService: CustomerService,
@@ -57,7 +59,40 @@ export class LoginComponent implements OnInit {
         }
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        alert(error.error.message);
+      }
+    );
+  }
+  public onSignUp(): void {
+    console.log('sign up');
+    this.onSwitchForm();
+  }
+  public onSwitchForm(): void {
+    this.loginForm = !this.loginForm;
+  }
+  public onSwitchType(type: string): void {
+    console.log(type);
+    if (type === 'Companies')
+    {
+      this.customerSignUP = true;
+    }
+    else if (type === 'Customers')
+    {
+      this.customerSignUP = false;
+    }
+  }
+  public register(addForm: NgForm): void {
+    console.log(addForm.value);
+    this.adminService.addCustomer(addForm.value).subscribe(
+      (response: Customer) => {
+        console.log(response);
+        const formValue = addForm.value;
+        this.loginWithTheLoginType(formValue.email, formValue.password, 2);
+        addForm.reset();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.error.message);
+        addForm.reset();
       }
     );
   }

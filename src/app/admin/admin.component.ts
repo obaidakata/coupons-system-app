@@ -36,7 +36,7 @@ export class AdminComponent implements OnInit {
         // this.companies.forEach(value => value.imageUrl = 'assets/images/' + value.name + '.png');
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        alert(error.error.message);
       }
     );
   }
@@ -71,20 +71,20 @@ export class AdminComponent implements OnInit {
         addForm.reset();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        alert(error.error.message);
         addForm.reset();
       }
     );
   }
   public onUpdateCompany(company: Company): void{
-    console.log(company);
+    console.log(company + 'onUpdateCompany');
     this.adminService.updateCompany(company).subscribe(
       (response: Company) => {
         console.log(response);
         this.getCompanies();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        alert(error.error.message);
       }
     );
   }
@@ -98,7 +98,7 @@ export class AdminComponent implements OnInit {
           this.getCompanies();
         },
         (error: HttpErrorResponse) => {
-          alert(error.message);
+          alert(error.error.message);
         }
       );
     }
@@ -115,7 +115,7 @@ export class AdminComponent implements OnInit {
         // this.customers.forEach(value => value.imageUrl = 'assets/images/' + value.name + '.png');
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        alert(error.error.message);
       }
     );
   }
@@ -150,7 +150,7 @@ export class AdminComponent implements OnInit {
         addForm.reset();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        alert(error.error.message);
         addForm.reset();
       }
     );
@@ -164,7 +164,7 @@ export class AdminComponent implements OnInit {
           this.getCustomers();
         },
         (error: HttpErrorResponse) => {
-          alert(error.message);
+          alert(error.error.message);
         }
       );
     }
@@ -179,7 +179,7 @@ export class AdminComponent implements OnInit {
           this.getCustomers();
         },
         (error: HttpErrorResponse) => {
-          alert(error.message);
+          alert(error.error.message);
         }
       );
     }

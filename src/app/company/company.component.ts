@@ -66,7 +66,7 @@ export class CompanyComponent implements OnInit {
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message + 'getCompanyDetails');
+        alert(error.error.message + 'getCompanyDetails');
       }
     );
   }
@@ -78,7 +78,7 @@ export class CompanyComponent implements OnInit {
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message + 'getCompanyCoupons');
+        alert(error.error.message + 'getCompanyCoupons');
       }
     );
   }
@@ -117,7 +117,7 @@ export class CompanyComponent implements OnInit {
         addForm.reset();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        alert(error.error.message);
         addForm.reset();
       }
   );
@@ -155,7 +155,7 @@ export class CompanyComponent implements OnInit {
           this.getCompanyCoupons();
         },
         (error: HttpErrorResponse) => {
-          alert(error.message);
+          alert(error.error.message);
         }
       );
     }
@@ -170,7 +170,7 @@ export class CompanyComponent implements OnInit {
           this.getCompanyCoupons();
         },
         (error: HttpErrorResponse) => {
-          alert(error.message);
+          alert(error.error.message);
         }
       );
     }
@@ -208,7 +208,7 @@ export class CompanyComponent implements OnInit {
           console.log(response);
         },
         (error: HttpErrorResponse) => {
-          alert(error.message + 'getCompanyCoupons');
+          alert(error.error.message + 'getCompanyCoupons');
         }
       );
     }
@@ -224,7 +224,7 @@ export class CompanyComponent implements OnInit {
           console.log(response);
         },
         (error: HttpErrorResponse) => {
-          alert(error.message + 'getCompanyCoupons');
+          alert(error.error.message + 'getCompanyCoupons');
         }
       );
     }
