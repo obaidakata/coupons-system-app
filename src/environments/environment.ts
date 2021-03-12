@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   companyAPIURL: 'http://localhost:5000/company',
   customerAPIURL: 'http://localhost:5000/customer',
-  adminAPIURL: 'http://localhost:5000/admin'
+  adminAPIURL: 'http://localhost:5000/admin',
+  registerAPIURL: 'http://localhost:5000/register'
 };
 
 /*

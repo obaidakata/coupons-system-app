@@ -4,6 +4,8 @@ import {AdminService} from '../services/admin.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {NgForm} from '@angular/forms';
 import {Customer} from '../dataTypes/customer';
+import {CompanyService} from '../services/company.service';
+import {AppComponent} from '../app.component';
 
 @Component({
   selector: 'app-admin',
@@ -19,7 +21,7 @@ export class AdminComponent implements OnInit {
   public deleteCustomer: Customer | null | undefined;
   public showCompanies = true;
 
-  constructor(private adminService: AdminService) {
+  constructor(private adminService: AdminService, private app: AppComponent) {
     this.companies = [];
   }
 
@@ -36,7 +38,7 @@ export class AdminComponent implements OnInit {
         // this.companies.forEach(value => value.imageUrl = 'assets/images/' + value.name + '.png');
       },
       (error: HttpErrorResponse) => {
-        alert(error.error.message);
+        this.app.handleError(error);
       }
     );
   }
@@ -71,7 +73,7 @@ export class AdminComponent implements OnInit {
         addForm.reset();
       },
       (error: HttpErrorResponse) => {
-        alert(error.error.message);
+        this.app.handleError(error);
         addForm.reset();
       }
     );
@@ -84,7 +86,7 @@ export class AdminComponent implements OnInit {
         this.getCompanies();
       },
       (error: HttpErrorResponse) => {
-        alert(error.error.message);
+        this.app.handleError(error);
       }
     );
   }
@@ -98,12 +100,11 @@ export class AdminComponent implements OnInit {
           this.getCompanies();
         },
         (error: HttpErrorResponse) => {
-          alert(error.error.message);
+          this.app.handleError(error);
         }
       );
     }
   }
-
 
 
   // ---------------- customers---------------
@@ -115,7 +116,7 @@ export class AdminComponent implements OnInit {
         // this.customers.forEach(value => value.imageUrl = 'assets/images/' + value.name + '.png');
       },
       (error: HttpErrorResponse) => {
-        alert(error.error.message);
+        this.app.handleError(error);
       }
     );
   }
@@ -150,7 +151,7 @@ export class AdminComponent implements OnInit {
         addForm.reset();
       },
       (error: HttpErrorResponse) => {
-        alert(error.error.message);
+        this.app.handleError(error);
         addForm.reset();
       }
     );
@@ -164,7 +165,7 @@ export class AdminComponent implements OnInit {
           this.getCustomers();
         },
         (error: HttpErrorResponse) => {
-          alert(error.error.message);
+          this.app.handleError(error);
         }
       );
     }
@@ -179,7 +180,7 @@ export class AdminComponent implements OnInit {
           this.getCustomers();
         },
         (error: HttpErrorResponse) => {
-          alert(error.error.message);
+          this.app.handleError(error);
         }
       );
     }

@@ -1,14 +1,15 @@
-<!--<form class="form-inline my-2 my-lg-0">-->
-<!--  <input type="search" (ngModelChange)="searchCompanies(key.value)" #key="ngModel" ngModel-->
-<!--         name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search companies..." required>-->
-<!--</form>-->
-<div class="btn-group btn-group-toggle" data-toggle="buttons">
-  <label (click)="onSwitchData('Companies')" class="btn btn-secondary active">
-    <input  type="radio" name="options" id="option1" autocomplete="off"> Companies
-  </label>
-  <label (click)="onSwitchData('Customers')" class="btn btn-secondary">
-    <input  type="radio" name="options" id="option2" autocomplete="off"> Customers
-  </label>
+<div class="container">
+  <div class="row">
+    <h1>Admin</h1>
+  </div>
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label (click)="onSwitchData('Companies')" class="btn btn-secondary active">
+      <input  type="radio" name="options" id="option1" autocomplete="off"> Companies
+    </label>
+    <label (click)="onSwitchData('Customers')" class="btn btn-secondary">
+      <input  type="radio" name="options" id="option2" autocomplete="off"> Customers
+    </label>
+  </div>
 </div>
 
 <div *ngIf="showCompanies" class="container" id="company-container">

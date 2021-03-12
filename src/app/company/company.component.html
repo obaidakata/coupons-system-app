@@ -1,6 +1,9 @@
 <div class="container">
-
   <div class="row">
+    <h1>{{companyDetails?.name}}</h1>
+  </div>
+  <div class="row">
+
     <div class="col-sm-3">
       <button class="btn btn-primary float-left" (click)="onOpenModalCoupon(null, 'add')" type="submit">Add Coupon</button>
     </div>
@@ -23,13 +26,13 @@
 
     <div class="form-group float-left col-sm-3">
       <div class="col-sm-3">
-        <div class="form-check" >
+        <div class="form-check disabled">
           <input  #radios1 (click)="categoryChanged('Food')"  ngModel class="form-check-input" type="radio" name="categoryID" id="radios1" value='Food'>
           <label class="form-check-label" for="exampleRadios1">
             Food
           </label>
         </div>
-        <div class="form-check">
+        <div class="form-check disabled">
           <input #radios2  (click)="categoryChanged('Electricity')" ngModel class="form-check-input" type="radio" name="categoryID" id="radios2" value='Electricity'>
           <label class="form-check-label" for="exampleRadios2">
             Electricity

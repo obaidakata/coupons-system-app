@@ -1,12 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {CompanyService} from './services/company.service';
-import {AdminService} from './services/admin.service';
 import {Company} from './dataTypes/company';
 import {HttpErrorResponse} from '@angular/common/http';
-import {element} from 'protractor';
-import {NgForm} from '@angular/forms';
-import {Console} from 'inspector';
-
 
 
 @Component({
@@ -18,6 +12,8 @@ export class AppComponent implements OnInit {
   public showAdmin = false;
   public showCompany = false;
   public showCustomer = false;
+  private  timeOut = 408;
+
   ngOnInit(): void {
   }
 
@@ -41,5 +37,18 @@ export class AppComponent implements OnInit {
     this.showLogin = true;
 
     this.showAdmin = this.showCompany = this.showCustomer = false;
+  }
+
+  public handleError(error: HttpErrorResponse): void {
+    const errorStatus =  error.status;
+    if (errorStatus === this.timeOut)
+    {
+      alert('Logging out: 30 min without action');
+      this.onLogOut();
+    }
+    else
+    {
+      alert(error.error.message);
+    }
   }
 }

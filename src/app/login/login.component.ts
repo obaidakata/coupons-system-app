@@ -8,6 +8,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {ClientService} from '../services/ClientService';
 import {AppComponent} from '../app.component';
 import {Customer} from '../dataTypes/customer';
+import {RegisterService} from '../services/register.service';
 
 enum ClientType
 {
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit {
   constructor(private adminService: AdminService,
               private companyService: CompanyService,
               private customerService: CustomerService,
+              private registerService: RegisterService,
               private app: AppComponent) {
     this.services = [adminService, companyService, customerService];
   }
@@ -49,19 +51,16 @@ export class LoginComponent implements OnInit {
     console.log(email);
     const service = this.services[loginType];
     service?.login(email, password).subscribe(
-      (response: boolean) => {
-        console.log(response);
-        if (response){
+      response => {
+        const token = response.headers.get('Authorization');
+        if (response.body && token !== null){
+          service.setHeader('Authorization', token);
           this.app.onSuccessfulLogin(service.name);
         }
         else {
           alert('Password or Email wrong!');
         }
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.error.message);
-      }
-    );
+      });
   }
   public onSignUp(): void {
     console.log('sign up');
@@ -83,15 +82,14 @@ export class LoginComponent implements OnInit {
   }
   public register(addForm: NgForm): void {
     console.log(addForm.value);
-    this.adminService.addCustomer(addForm.value).subscribe(
+    this.registerService.addCustomer(addForm.value).subscribe(
       (response: Customer) => {
         console.log(response);
-        const formValue = addForm.value;
-        this.loginWithTheLoginType(formValue.email, formValue.password, 2);
+        this.loginWithTheLoginType(response.email, response.password, 2);
         addForm.reset();
       },
       (error: HttpErrorResponse) => {
-        alert(error.error.message);
+        this.app.handleError(error);
         addForm.reset();
       }
     );

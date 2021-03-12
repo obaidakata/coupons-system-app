@@ -7,6 +7,7 @@ import {NgForm} from '@angular/forms';
 import {CustomerService} from '../services/customer.service';
 import {Customer} from '../dataTypes/customer';
 import {eCustomerIndexPage} from '../models/eCustomerIndexPage';
+import {AppComponent} from '../app.component';
 
 @Component({
   selector: 'app-customer',
@@ -34,7 +35,7 @@ export class CustomerComponent implements OnInit {
   @ViewChild('radios3') radios3: ElementRef | undefined;
   @ViewChild('radios4') radios4: ElementRef | undefined;
 
-  constructor(private customerService: CustomerService) {
+  constructor(private customerService: CustomerService, private app: AppComponent) {
     this.customerCoupons = [];
     this.companyCoupons = [];
     this.customerDetails = null;
@@ -44,9 +45,7 @@ export class CustomerComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCustomerDetails();
-    this.getCustomerCoupons();
     this.maxPriceInput = document.getElementById('maxPriceInput') as HTMLInputElement;
-    this.getAllCoupons();
     this.reset();
   }
 
@@ -78,7 +77,7 @@ export class CustomerComponent implements OnInit {
   }
 
   public applyCategoryFilter(): void{
-    if (this.currentCategory !== undefined) {
+    if (this.currentCategory !== undefined  && this.currentCategory !== '') {
       console.log(this.currentCategory + ' currentCategory');
 
       if (this.ePageIndex === eCustomerIndexPage.showCompaniesCoupons ) {
@@ -88,7 +87,7 @@ export class CustomerComponent implements OnInit {
             console.log(response);
           },
           (error: HttpErrorResponse) => {
-            alert(error.error.message + ' getCustomerCoupons');
+            this.app.handleError(error);
           }
         );
       }
@@ -99,7 +98,7 @@ export class CustomerComponent implements OnInit {
             console.log(response);
           },
           (error: HttpErrorResponse) => {
-            alert(error.error.message + ' getCustomerCoupons');
+            this.app.handleError(error);
           }
         );
       }
@@ -118,7 +117,7 @@ export class CustomerComponent implements OnInit {
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.error.message + 'getCustomerDetails');
+        this.app.handleError(error);
       }
     );
   }
@@ -129,7 +128,7 @@ export class CustomerComponent implements OnInit {
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.error.message + 'getCustomerDetails');
+        this.app.handleError(error);
       }
     );
   }
@@ -141,7 +140,7 @@ export class CustomerComponent implements OnInit {
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.error.message + 'getCustomerCoupons');
+        this.app.handleError(error);
       }
     );
   }
@@ -169,7 +168,7 @@ export class CustomerComponent implements OnInit {
             this.getCustomerCoupons();
           },
           (error: HttpErrorResponse) => {
-            alert(error.error.message);
+            this.app.handleError(error);
           }
         );
       }
@@ -204,7 +203,7 @@ export class CustomerComponent implements OnInit {
           console.log(response);
         },
         (error: HttpErrorResponse) => {
-          alert(error.error.message + 'getCompanyCoupons');
+          this.app.handleError(error);
         }
       );
       this.customerService.getCustomerCouponsByMaxPrice(this.currentRangePrice).subscribe(
@@ -213,7 +212,7 @@ export class CustomerComponent implements OnInit {
           console.log(response);
         },
         (error: HttpErrorResponse) => {
-          alert(error.error.message + 'getCompanyCoupons');
+          this.app.handleError(error);
         });
     }
   }
@@ -221,11 +220,11 @@ export class CustomerComponent implements OnInit {
   private getRangeValueAllCompaniesCoupons(): void{
     this.customerService.getAllCoupons().subscribe(
       (response: Coupon[]) => {
-        this.companyCoupons = response;
+        this.companyCoupons = response.sort((one, two) => (one.title > two.title ? -1 : 1));
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.error.message + 'getCustomerCoupons');
+        this.app.handleError(error);
       }
     );
     if (this.companyCoupons !== null && this.companyCoupons.length > 0) {
@@ -244,7 +243,7 @@ export class CustomerComponent implements OnInit {
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.error.message + 'getCustomerCoupons');
+        this.app.handleError(error);
       }
     );
     if (this.companyCoupons !== null && this.companyCoupons.length > 0) {

@@ -1,4 +1,9 @@
 <div class="container">
+
+  <div class="row">
+    <h1>{{customerDetails?.firstName}} {{customerDetails?.lastName}}</h1>
+  </div>
+
   <div class="btn-group btn-group-toggle mt-6" data-toggle="buttons">
     <label (click)="onSwitchData('Companies')" class="btn btn-secondary active">
       <input  type="radio" name="options" id="option1" autocomplete="off"> Companies coupons

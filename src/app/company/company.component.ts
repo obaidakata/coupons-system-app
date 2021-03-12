@@ -1,11 +1,10 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Coupon} from '../dataTypes/coupon';
-import {AdminService} from '../services/admin.service';
 import {CompanyService} from '../services/company.service';
 import {Company} from '../dataTypes/company';
 import {HttpErrorResponse} from '@angular/common/http';
 import {NgForm} from '@angular/forms';
-import {templateJitUrl} from '@angular/compiler';
+import {AppComponent} from '../app.component';
 
 
 
@@ -35,7 +34,7 @@ export class CompanyComponent implements OnInit {
   public currentRangePrice = 0;
   public maxPriceInput: HTMLInputElement | null | undefined;
   public currentCategory = '';
-  constructor(private companyService: CompanyService) {
+  constructor(private companyService: CompanyService, private app: AppComponent) {
     this.companyCoupons = [];
     this.editCoupon = null;
     this.deleteCoupon = null;
@@ -66,7 +65,7 @@ export class CompanyComponent implements OnInit {
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.error.message + 'getCompanyDetails');
+        this.app.handleError(error);
       }
     );
   }
@@ -78,7 +77,7 @@ export class CompanyComponent implements OnInit {
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.error.message + 'getCompanyCoupons');
+        this.app.handleError(error);
       }
     );
   }
@@ -117,7 +116,7 @@ export class CompanyComponent implements OnInit {
         addForm.reset();
       },
       (error: HttpErrorResponse) => {
-        alert(error.error.message);
+        this.app.handleError(error);
         addForm.reset();
       }
   );
@@ -155,7 +154,7 @@ export class CompanyComponent implements OnInit {
           this.getCompanyCoupons();
         },
         (error: HttpErrorResponse) => {
-          alert(error.error.message);
+          this.app.handleError(error);
         }
       );
     }
@@ -170,7 +169,7 @@ export class CompanyComponent implements OnInit {
           this.getCompanyCoupons();
         },
         (error: HttpErrorResponse) => {
-          alert(error.error.message);
+          this.app.handleError(error);
         }
       );
     }
@@ -200,7 +199,7 @@ export class CompanyComponent implements OnInit {
     this.currentCategory = category;
   }
   public applyCategoryFilter(): void{
-    if (this.currentCategory !== undefined) {
+    if (this.currentCategory !== undefined && this.currentCategory !== '') {
       console.log(this.currentCategory + 'currentCategory');
       this.companyService.getCompanyCouponsByCategory(this.currentCategory).subscribe(
         (response: Coupon[]) => {
@@ -208,7 +207,7 @@ export class CompanyComponent implements OnInit {
           console.log(response);
         },
         (error: HttpErrorResponse) => {
-          alert(error.error.message + 'getCompanyCoupons');
+          this.app.handleError(error);
         }
       );
     }
@@ -224,7 +223,7 @@ export class CompanyComponent implements OnInit {
           console.log(response);
         },
         (error: HttpErrorResponse) => {
-          alert(error.error.message + 'getCompanyCoupons');
+          this.app.handleError(error);
         }
       );
     }
